@@ -17,7 +17,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoggedInHomepage"></activity>
-        <activity android:name=".DriverLeavingTimePage"></activity>
+        <activity android:name=".DriverSetTimePage"></activity>
+        <activity android:name=".DriverPickupNumPage"></activity>
+        <activity android:name=".PassengerNumPage"></activity>
+        <activity android:name=".PassengerSetTimePage"></activity>
     </application>
 
 </manifest>
