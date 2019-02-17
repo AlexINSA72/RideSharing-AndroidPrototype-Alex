@@ -13,7 +13,8 @@ public class RideListings extends AppCompatActivity {
         setContentView(R.layout.activity_ride_listings);
 
         RecyclerView rides = (RecyclerView)findViewById(R.id.rideListings);
-        String[] rideListings = {"One", "Two", "Three", "Four", "Five", "Six"};
+        String[] rideListings = {"Los Angeles -> San Francisco", "Santa Monica -> San Francisco",
+                "Westwood -> San Francisco", "Los Angeles -> San Jose", "Los Angeles -> Oakland"};
 
         MyAdapter adapter = new MyAdapter(rideListings);
 
