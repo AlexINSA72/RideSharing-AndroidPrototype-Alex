@@ -16,10 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoggedInHomepage" />
-        <activity android:name=".DriverLeavingTimePage" />
-        <activity android:name=".DriverPickupNumPage" />
+        <activity android:name=".LoggedInHomepage"></activity>
+        <activity android:name=".DriverSetTimePage"></activity>
+        <activity android:name=".DriverPickupNumPage"></activity>
+        <activity android:name=".PassengerNumPage"></activity>
         <activity android:name=".RideListings"></activity>
+        <activity android:name=".PassengerSetTimePage"></activity>
     </application>
 
 </manifest>
