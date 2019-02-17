@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void logIn(View view)
     {
-        Intent intent = new Intent(this, LoggedInHomepage.class);
+        Intent intent = new Intent(this, RideListings.class);
         startActivity(intent);
     }
 }
