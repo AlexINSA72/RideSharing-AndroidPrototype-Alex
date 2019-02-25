@@ -13,50 +13,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="157dp">
 
-        <TextView
-            android:id="@+id/questionText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="Start A New Ride"
-            android:textSize="30sp"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.044" />
-
-        <TextView
-            android:id="@+id/dateText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="Which date are you leaving?"
-            android:textSize="20sp"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.12" />
-
-        <CalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="282dp"
-            android:layout_height="245dp"
-            android:weekNumberColor="@color/design_default_color_primary_dark"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.22" />
+        <include layout="@layout/toolbar"/>
 
         <TextView
             android:id="@+id/leaveText"
@@ -66,27 +23,27 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="48dp"
             android:layout_marginBottom="16dp"
-            android:text="When is your earliest time available to leave your starting point?"
-            android:textSize="20sp"
             android:gravity="center"
+            android:text="When is your earliest time available to leave your starting point?"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.6" />
+            app:layout_constraintVertical_bias="0.094" />
 
         <TimePicker
-            android:id="@+id/timePicker1"
+            android:id="@+id/leavingTime"
             android:layout_width="226dp"
-            android:layout_height="103dp"
-            android:headerBackground="@color/design_default_color_primary_dark"
-            android:numbersSelectorColor="@color/design_default_color_primary_dark"
+            android:layout_height="200dp"
+            android:headerBackground="@color/colorPrimaryDark"
+            android:numbersSelectorColor="@color/colorPrimaryDark"
             android:timePickerMode="spinner"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.7" />
+            app:layout_constraintVertical_bias="0.2" />
 
         <TextView
             android:id="@+id/reachText"
@@ -97,26 +54,38 @@
             android:layout_marginEnd="48dp"
             android:layout_marginBottom="16dp"
             android:text="When is your latest time available to reach your destination?"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.8" />
+            app:layout_constraintVertical_bias="0.52" />
 
         <TimePicker
-            android:id="@+id/timePicker2"
+            android:id="@+id/reachingTime"
             android:layout_width="226dp"
-            android:layout_height="103dp"
-            android:headerBackground="@color/design_default_color_primary_dark"
-            android:numbersSelectorColor="@color/design_default_color_primary_dark"
+            android:layout_height="200dp"
+            android:headerBackground="@color/colorPrimaryDark"
+            android:numbersSelectorColor="@color/colorPrimaryDark"
             android:timePickerMode="spinner"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.9" />
+            app:layout_constraintVertical_bias="0.84" />
+
+        <Button
+            android:id="@+id/next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirm"
+            android:onClick="confirm"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.95" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

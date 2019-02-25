@@ -11,7 +11,9 @@
         android:layout_height="match_parent"
         tools:context=".PassengerNumPage"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="157dp">
+        tools:layout_editor_absoluteY="16dp">
+
+        <include layout="@layout/toolbar"/>
 
         <TextView
             android:id="@+id/questionText"
@@ -21,59 +23,76 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:text="How many people are in your group?"
-            android:textSize="30sp"
+            android:text="How many people are there in your group?"
             android:gravity="center"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.044" />
+            app:layout_constraintVertical_bias="0.115" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton2"
+            android:id="@+id/plusButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
             android:layout_marginEnd="32dp"
+            android:clickable="true"
+            android:onClick="increaseNum"
+            app:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:backgroundTint="@color/design_default_color_primary"
-            app:srcCompat="@drawable/ic_plus"/>
+            app:layout_constraintVertical_bias="0.40"
+            app:srcCompat="@drawable/ic_plus" />
+
         <TextView
-            android:id="@+id/textView"
-            android:layout_centerVertical="true"
+            android:id="@+id/pickupNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3"
+            android:layout_centerVertical="true"
+            android:text="2"
+            app:layout_constraintVertical_bias="0.40"
             android:textSize="@android:dimen/notification_large_icon_height"
-            android:textColorLink="@color/design_default_color_primary_dark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/checkBox3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="With pets"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.60"/>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton3"
+            android:id="@+id/minusButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
             android:layout_marginStart="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:backgroundTint="@color/design_default_color_primary"
-            app:srcCompat="@drawable/ic_minus"
+            android:clickable="true"
+            android:onClick="decreaseNum"
             android:textAppearance="?android:textAppearanceLarge"
             android:textColor="#4689C8"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.40"
+            app:srcCompat="@drawable/ic_minus" />
 
         <Button
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Confirm"
+            android:onClick="search"
+            android:text="SEARCH"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
