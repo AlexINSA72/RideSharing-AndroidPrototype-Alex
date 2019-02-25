@@ -21,7 +21,7 @@ public class PassengerSignUpPage extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver_sign_up_page);
+        setContentView(R.layout.activity_passenger_sign_up);
         name = (EditText) findViewById(R.id.name);
         mail = (EditText) findViewById(R.id.email);
         passwo = (EditText) findViewById(R.id.password);
@@ -33,11 +33,8 @@ public class PassengerSignUpPage extends AppCompatActivity{
     {
         Intent intent = new Intent(this, LoginPage.class);
         SQLiteDatabase myDB = openOrCreateDatabase("rideShareDB",MODE_PRIVATE,null);
-        myDB.execSQL("CREATE TABLE IF NOT EXISTS Profile(Name TEXT, Password TEXT, MailAddress TEXT, phone TEXT, idProfile INT);");
-        myDB.execSQL("CREATE TABLE IF NOT EXISTS ListPass(idProfile INT, idTravel INT, idList INT);");
-        myDB.execSQL("CREATE TABLE IF NOT EXISTS Travel(Departure TEXT, Destination TEXT, Day INT, Month INT, Year INT, Hour INT, Mins INT , idProfileDriver INT, nbPassMax INT, idListPass INT);");
         int nbProfile =  myDB.rawQuery("Select * from Profile",null).getCount();
-        myDB.execSQL("INSERT INTO Profile VALUES('"+name.getText().toString()+"','"+passwo.getText().toString()+"','"+mail.getText().toString()+"','"+phone.getText().toString()+"','"+(nbProfile+1)+"');");
+        myDB.execSQL("INSERT INTO Profile VALUES(0, '"+name.getText().toString()+"','"+passwo.getText().toString()+"','"+mail.getText().toString()+"','"+phone.getText().toString()+"','"+(nbProfile+1)+"');");
         startActivity(intent);
     }
 }

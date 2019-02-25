@@ -94,6 +94,7 @@
                 android:layout_marginTop="452dp"
                 android:layout_marginEnd="8dp"
                 android:background="@color/colorPrimary"
+                android:onClick="tryConnect"
                 android:text="Log In"
                 android:textColor="@android:color/background_light"
                 android:textSize="24sp"

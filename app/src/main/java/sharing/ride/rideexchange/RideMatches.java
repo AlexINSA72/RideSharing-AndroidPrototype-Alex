@@ -1,10 +1,14 @@
 package sharing.ride.rideexchange;
 
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,8 +32,61 @@ public class RideMatches extends FragmentActivity implements OnMapReadyCallback 
 
         RecyclerView rides = (RecyclerView)findViewById(R.id.rideMatches);
         rides.addItemDecoration(new DividerItemDecoration(rides.getContext(), DividerItemDecoration.VERTICAL));
-        String[] rideListings = {"Los Angeles to San Francisco", "Santa Monica to San Francisco",
-                "Westwood to San Francisco", "Los Angeles to San Jose", "Los Angeles to Oakland"};
+
+        /* DATABASE STUFF */
+
+        SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
+        SharedPreferences reservation = getSharedPreferences("reservation",MODE_PRIVATE);
+        int id = sp.getInt("id",0);
+        String departure = reservation.getString("departure","");
+        String destination = reservation.getString("destination","");
+        int day = reservation.getInt("day",0);
+        int month = reservation.getInt("month",0);
+        int year = reservation.getInt("year",0);
+        int hour = reservation.getInt("hour",0);
+        int mins = reservation.getInt("mins",0);
+        int nbPassMax = reservation.getInt("num",0);
+        //myDB.execSQL("CREATE TABLE IF NOT EXISTS Travel(Departure TEXT, Destination TEXT, Day INT, Month INT, Year INT, Hour INT, Mins INT , idProfileDriver INT, nbPassMax INT, idListPass INT, idTravel INT);");
+
+        SQLiteDatabase myDB = openOrCreateDatabase("rideShareDB",MODE_PRIVATE,null);
+        Cursor resultSet =  myDB.rawQuery("Select * from Travel where Departure = \""+departure+"\" and Destination = \""+destination+"\" and Year = \""+year+"\" and Month = \""+month+"\" and Day = \""+day+"\" and Hour > \""+hour+"\"",null);
+        resultSet.moveToFirst();
+        String[] rideListings = new String[resultSet.getCount()];
+        String dep;
+        String des;
+        String dayy;
+        String monthh;
+        String yearr;
+        String hourr;
+        String minss;
+        String name;
+        int idDriver;
+        int nbPass;
+        int realNbPass;
+        int idList;
+        int idTravel;
+        for (int i = 0; i < resultSet.getCount(); i++) {
+            dep = resultSet.getString(0);
+            des = resultSet.getString(1);
+            dayy = resultSet.getString(2);
+            monthh = resultSet.getString(3);
+            yearr = resultSet.getString(4);
+            hourr = resultSet.getString(5);
+            minss = resultSet.getString(6);
+            idDriver = Integer.parseInt(resultSet.getString(7));
+            nbPass = Integer.parseInt(resultSet.getString(8));
+            idList = Integer.parseInt(resultSet.getString(9));
+            idTravel = Integer.parseInt(resultSet.getString(10));
+
+            Cursor driverDB = myDB.rawQuery("Select * from Profile where idProfile = \""+ idDriver +"\"",null);
+            driverDB.moveToFirst();
+            name = driverDB.getString(1);
+
+            realNbPass = nbPass - myDB.rawQuery("Select * from ListPass where idTravel = \"" + idTravel + "\"",null).getCount() + 1;
+
+            rideListings[i] = dep + " to " + des + " " + dayy + "/" + monthh + "/" + yearr + " at " + hourr + ":" + minss + "  " + realNbPass + "/" + nbPass + " places remaining with " + name;
+            resultSet.moveToNext();
+        }
 
         RideMatchAdapter adapter = new RideMatchAdapter(rideListings);
 

@@ -35,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        SQLiteDatabase myDB = openOrCreateDatabase("rideShareDB",MODE_PRIVATE,null);
+        myDB.execSQL("CREATE TABLE IF NOT EXISTS Profile(Driver INT, Name TEXT, Password TEXT, MailAddress TEXT, phone TEXT, idProfile INT);");
+        //myDB.execSQL("DROP TABLE ListPass");
+        myDB.execSQL("CREATE TABLE IF NOT EXISTS ListPass(idProfile INT, idTravel INT, idList INT);");
+        //myDB.execSQL("DROP TABLE Travel");
+        myDB.execSQL("CREATE TABLE IF NOT EXISTS Travel(Departure TEXT, Destination TEXT, Day INT, Month INT, Year INT, Hour INT, Mins INT , idProfileDriver INT, nbPassMax INT, idListPass INT, idTravel INT);");
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
 
@@ -72,20 +79,23 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(this, LoginPage.class);
         SQLiteDatabase myDB = openOrCreateDatabase("rideShareDB",MODE_PRIVATE,null);
-        Cursor resultSet = myDB.rawQuery("Select * from Profile",null);
+
+        Cursor resultSet = myDB.rawQuery("Select * from Travel",null);
         resultSet.moveToFirst();
+        String driver;
         String name;
         String password;
         String mail;
         String id;
         String phone;
         for (int i = 0; i < resultSet.getCount(); i++) {
-            name = resultSet.getString(0);
-            password = resultSet.getString(1);
-            mail = resultSet.getString(2);
-            phone = resultSet.getString(3);
-            id = resultSet.getString(4);
-            Log.d("tag", name+password+mail+phone+id); // Just to display in debug mode
+            driver = resultSet.getString(0);
+            name = resultSet.getString(1);
+            password = resultSet.getString(2);
+            mail = resultSet.getString(3);
+            phone = resultSet.getString(4);
+            id = resultSet.getString(5);
+            Log.d("tag", driver+name+password+mail+phone+id); // Just to display in debug mode
             resultSet.moveToNext();
         }
         startActivity(intent);
