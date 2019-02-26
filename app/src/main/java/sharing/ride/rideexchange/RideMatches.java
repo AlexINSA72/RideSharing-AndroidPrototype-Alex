@@ -29,7 +29,35 @@ public class RideMatches extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    }
 
+
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+//        LatLng sanFrancisco = new LatLng(37.773972, -122.431297);
+//        LatLng losAngeles = new LatLng(34.052235, -118.243683);
+//        LatLng sanLuisObispo = new LatLng(35.616348, -119.694298);
+//        mMap.addMarker(new MarkerOptions().position(sanFrancisco).title("San Francisco"));
+//        mMap.addMarker(new MarkerOptions().position(losAngeles).title("Los Angeles"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sanLuisObispo, 6.0f));
+
+        setRideListing();
+    }
+
+    public void setRideListing()
+    {
         RecyclerView rides = (RecyclerView)findViewById(R.id.rideMatches);
         rides.addItemDecoration(new DividerItemDecoration(rides.getContext(), DividerItemDecoration.VERTICAL));
 
@@ -51,7 +79,8 @@ public class RideMatches extends FragmentActivity implements OnMapReadyCallback 
         SQLiteDatabase myDB = openOrCreateDatabase("rideShareDB",MODE_PRIVATE,null);
         Cursor resultSet =  myDB.rawQuery("Select * from Travel where Departure = \""+departure+"\" and Destination = \""+destination+"\" and Year = \""+year+"\" and Month = \""+month+"\" and Day = \""+day+"\" and Hour > \""+hour+"\"",null);
         resultSet.moveToFirst();
-        String[] rideListings = new String[resultSet.getCount()];
+        Ride[] rideListings = new Ride[resultSet.getCount()];
+
         String dep;
         String des;
         String dayy;
@@ -84,37 +113,30 @@ public class RideMatches extends FragmentActivity implements OnMapReadyCallback 
 
             realNbPass = nbPass - myDB.rawQuery("Select * from ListPass where idTravel = \"" + idTravel + "\"",null).getCount() + 1;
 
-            rideListings[i] = dep + " to " + des + " " + dayy + "/" + monthh + "/" + yearr + " at " + hourr + ":" + minss + "  " + realNbPass + "/" + nbPass + " places remaining with " + name;
+            //rideListings[i] = dep + " to " + des + " " + dayy + "/" + monthh + "/" + yearr + " at " + hourr + ":" + minss + "  " + realNbPass + "/" + nbPass + " places remaining with " + name;
+            rideListings[i] = new Ride(dep, des, dayy, monthh, yearr, hourr, minss, name, idDriver, nbPass, realNbPass, idList, idTravel);
+
             resultSet.moveToNext();
         }
 
-        RideMatchAdapter adapter = new RideMatchAdapter(rideListings);
+        Ride[] rideTest = new Ride[4];
+        rideTest[0] = new Ride("Los Angeles", "Oakland", "3",
+                "3", "3333", "3", "33", "Brad",
+                3, 3, 3, 3, 3);
+        rideTest[1] = new Ride("San Francisco", "San Jose", "3",
+                "3", "3333", "3", "33", "Brad",
+                3, 3, 3, 3, 3);
+        rideTest[2] = new Ride("Santa Monica", "San Jose", "3",
+                "3", "3333", "3", "33", "Brad",
+                3, 3, 3, 3, 3);
+        rideTest[3] = new Ride("Westwood", "San Francisco", "3",
+                "3", "3333", "3", "33", "Brad",
+                3, 3, 3, 3, 3);
+        RideMatchAdapter adapter = new RideMatchAdapter(rideListings, mMap);
+        //RideMatchAdapter adapter = new RideMatchAdapter(rideTest, mMap);
 
         rides.setAdapter(adapter);
 
         rides.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sanFrancisco = new LatLng(37.773972, -122.431297);
-        LatLng losAngeles = new LatLng(34.052235, -118.243683);
-        LatLng sanLuisObispo = new LatLng(35.616348, -119.694298);
-        mMap.addMarker(new MarkerOptions().position(sanFrancisco).title("San Francisco"));
-        mMap.addMarker(new MarkerOptions().position(losAngeles).title("Los Angeles"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sanLuisObispo, 6.0f));
     }
 }

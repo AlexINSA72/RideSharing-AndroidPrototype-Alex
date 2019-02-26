@@ -7,9 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 public class RideMatchAdapter extends RecyclerView.Adapter<RideMatchAdapter.MyViewHolder>
 {
-    private String[] mDataset;
+    //private String[] mDataset;
+    private Ride[] rDataset;
+    private GoogleMap mMap;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -26,8 +33,9 @@ public class RideMatchAdapter extends RecyclerView.Adapter<RideMatchAdapter.MyVi
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RideMatchAdapter(String[] myDataset) {
-        mDataset = myDataset;
+    public RideMatchAdapter(Ride[] myDataset, GoogleMap gMap) {
+        this.rDataset = myDataset;
+        this.mMap = gMap;
     }
 
     // Create new views (invoked by the layout manager)
@@ -47,20 +55,58 @@ public class RideMatchAdapter extends RecyclerView.Adapter<RideMatchAdapter.MyVi
     public void onBindViewHolder(RideMatchAdapter.MyViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.origin.setText(mDataset[position]);
+        holder.origin.setText(rDataset[position].dep + " to " + rDataset[position].des + " " + rDataset[position].dayy + "/"
+                + rDataset[position].monthh + "/" + rDataset[position].yearr + " at "
+                + rDataset[position].hourr + ":" + rDataset[position].minss + "  " + rDataset[position].realNbPass + "/"
+                + rDataset[position].nbPass + " places remaining with " + rDataset[position].name);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = mDataset[position];
-                System.out.println("Clicked: " + id);
+                Ride id = rDataset[position];
+                System.out.println("Clicked: " + id.name);
+                mMap.clear();
+
+//                LatLng sanFrancisco = new LatLng(37.773972, -122.431297);
+//                LatLng losAngeles = new LatLng(34.052235, -118.243683);
+//                LatLng sanLuisObispo = new LatLng(35.616348, -119.694298);
+
+                LatLng departure = getCoords(id.dep);
+                LatLng destination = getCoords(id.des);
+
+                double xbs = (departure.latitude + destination.latitude) / 2.0;
+                double ybs = (departure.longitude + destination.longitude) / 2.0;
+                mMap.addMarker(new MarkerOptions().position(departure).title(id.dep));
+                mMap.addMarker(new MarkerOptions().position(destination).title(id.des));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(xbs, ybs), 6.0f));
                 //You can call detail fragment here
             }
         });
     }
 
+    public LatLng getCoords(String s)
+    {
+        switch(s)
+        {
+            case "Los Angeles" :
+                return new LatLng(34.052235, -118.243683);
+            case "Santa Monica" :
+                return new LatLng(34.024212, -118.496475);
+            case "Westwood" :
+                return new LatLng(34.052235, -118.243683);
+            case "San Jose" :
+                return new LatLng(37.279518, -121.867905);
+            case "Oakland" :
+                return new LatLng(37.804363, -122.271111);
+            case "San Francisco" :
+                return new LatLng(37.773972, -122.431297);
+            default:
+                return null;
+        }
+    }
+
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return rDataset.length;
     }
 }
