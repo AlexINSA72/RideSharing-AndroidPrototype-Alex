@@ -11,6 +11,8 @@ import android.widget.TextView;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
 {
     private String[] mDataset;
+    private RideListings rl;
+    private boolean destination;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -27,8 +29,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(String[] myDataset) {
+    public MyAdapter(String[] myDataset, RideListings rl, boolean destination) {
         mDataset = myDataset;
+        this.rl = rl;
+        this.destination = destination;
     }
 
     // Create new views (invoked by the layout manager)
@@ -54,6 +58,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
             public void onClick(View view) {
                 String id = mDataset[position];
                 System.out.println("Clicked: " + id);
+
+                if(destination)
+                {
+                    rl.selectedDes = mDataset[position];
+                }
+
+                else
+                {
+                    rl.selectedDep = mDataset[position];
+                }
+
+                System.out.println("DEP: " + rl.selectedDep + " DES: " + rl.selectedDes);
                 //You can call detail fragment here
             }
         });

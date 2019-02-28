@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         SQLiteDatabase myDB = openOrCreateDatabase("rideShareDB",MODE_PRIVATE,null);
+        //myDB.execSQL("DROP TABLE Profile");
         myDB.execSQL("CREATE TABLE IF NOT EXISTS Profile(Driver INT, Name TEXT, Password TEXT, MailAddress TEXT, phone TEXT, idProfile INT);");
         //myDB.execSQL("DROP TABLE ListPass");
         myDB.execSQL("CREATE TABLE IF NOT EXISTS ListPass(idProfile INT, idTravel INT, idList INT);");

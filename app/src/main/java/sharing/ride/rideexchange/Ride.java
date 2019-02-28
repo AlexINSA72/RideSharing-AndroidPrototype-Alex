@@ -15,10 +15,11 @@ public class Ride
     public int realNbPass;
     public int idList;
     public int idTravel;
+    public String phoneNumber;
 
     public Ride(String dep, String des, String dayy, String monthh, String yearr,
                 String hourr, String minss, String name, int idDriver, int nbPass, int realNbPass,
-                int idList, int idTravel)
+                int idList, int idTravel, String phoneNumber)
     {
         this.dep = dep;
         this.des = des;
@@ -33,5 +34,6 @@ public class Ride
         this.realNbPass = realNbPass;
         this.idList = idList;
         this.idTravel = idTravel;
+        this.phoneNumber = phoneNumber;
     }
 }

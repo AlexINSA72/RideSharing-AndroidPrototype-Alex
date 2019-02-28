@@ -57,8 +57,7 @@ public class RideMatchAdapter extends RecyclerView.Adapter<RideMatchAdapter.MyVi
         // - replace the contents of the view with that element
         holder.origin.setText(rDataset[position].dep + " to " + rDataset[position].des + " " + rDataset[position].dayy + "/"
                 + rDataset[position].monthh + "/" + rDataset[position].yearr + " at "
-                + rDataset[position].hourr + ":" + rDataset[position].minss + "  " + rDataset[position].realNbPass + "/"
-                + rDataset[position].nbPass + " places remaining with " + rDataset[position].name);
+                + rDataset[position].hourr + ":" + rDataset[position].minss + "  " + rDataset[position].realNbPass + " places remaining with " + rDataset[position].name + " contact " + rDataset[position].phoneNumber);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

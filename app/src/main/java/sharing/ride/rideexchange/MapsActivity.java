@@ -31,11 +31,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String[] rideListings = {"Los Angeles", "Santa Monica",
                 "Westwood", "San Jose", "Oakland", "San Francisco"};
 
-        MyAdapter adapter = new MyAdapter(rideListings);
+        //MyAdapter adapter = new MyAdapter(rideListings);
 
-        rides.setAdapter(adapter);
-
-        rides.setLayoutManager(new LinearLayoutManager(this));
+//        rides.setAdapter(adapter);
+//
+//        rides.setLayoutManager(new LinearLayoutManager(this));
     }
 
 

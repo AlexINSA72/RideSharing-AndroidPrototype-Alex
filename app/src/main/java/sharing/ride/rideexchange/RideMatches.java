@@ -77,7 +77,7 @@ public class RideMatches extends FragmentActivity implements OnMapReadyCallback 
         //myDB.execSQL("CREATE TABLE IF NOT EXISTS Travel(Departure TEXT, Destination TEXT, Day INT, Month INT, Year INT, Hour INT, Mins INT , idProfileDriver INT, nbPassMax INT, idListPass INT, idTravel INT);");
 
         SQLiteDatabase myDB = openOrCreateDatabase("rideShareDB",MODE_PRIVATE,null);
-        Cursor resultSet =  myDB.rawQuery("Select * from Travel where Departure = \""+departure+"\" and Destination = \""+destination+"\" and Year = \""+year+"\" and Month = \""+month+"\" and Day = \""+day+"\" and Hour > \""+hour+"\"",null);
+        Cursor resultSet =  myDB.rawQuery("Select * from Travel where Departure = \""+departure+"\" and Destination = \""+destination+"\" and Year = \""+year+"\" and Month = \""+month+"\" and Day = \""+day+"\" and Hour >= \""+hour+"\"",null);
         resultSet.moveToFirst();
         Ride[] rideListings = new Ride[resultSet.getCount()];
 
@@ -94,6 +94,7 @@ public class RideMatches extends FragmentActivity implements OnMapReadyCallback 
         int realNbPass;
         int idList;
         int idTravel;
+        String phoneNumber;
         for (int i = 0; i < resultSet.getCount(); i++) {
             dep = resultSet.getString(0);
             des = resultSet.getString(1);
@@ -110,28 +111,29 @@ public class RideMatches extends FragmentActivity implements OnMapReadyCallback 
             Cursor driverDB = myDB.rawQuery("Select * from Profile where idProfile = \""+ idDriver +"\"",null);
             driverDB.moveToFirst();
             name = driverDB.getString(1);
+            phoneNumber = driverDB.getString(4);
 
             realNbPass = nbPass - myDB.rawQuery("Select * from ListPass where idTravel = \"" + idTravel + "\"",null).getCount() + 1;
 
             //rideListings[i] = dep + " to " + des + " " + dayy + "/" + monthh + "/" + yearr + " at " + hourr + ":" + minss + "  " + realNbPass + "/" + nbPass + " places remaining with " + name;
-            rideListings[i] = new Ride(dep, des, dayy, monthh, yearr, hourr, minss, name, idDriver, nbPass, realNbPass, idList, idTravel);
+            rideListings[i] = new Ride(dep, des, dayy, monthh, yearr, hourr, minss, name, idDriver, nbPass, realNbPass, idList, idTravel, phoneNumber);
 
             resultSet.moveToNext();
         }
 
-        Ride[] rideTest = new Ride[4];
-        rideTest[0] = new Ride("Los Angeles", "Oakland", "3",
-                "3", "3333", "3", "33", "Brad",
-                3, 3, 3, 3, 3);
-        rideTest[1] = new Ride("San Francisco", "San Jose", "3",
-                "3", "3333", "3", "33", "Brad",
-                3, 3, 3, 3, 3);
-        rideTest[2] = new Ride("Santa Monica", "San Jose", "3",
-                "3", "3333", "3", "33", "Brad",
-                3, 3, 3, 3, 3);
-        rideTest[3] = new Ride("Westwood", "San Francisco", "3",
-                "3", "3333", "3", "33", "Brad",
-                3, 3, 3, 3, 3);
+//        Ride[] rideTest = new Ride[4];
+//        rideTest[0] = new Ride("Los Angeles", "Oakland", "3",
+//                "3", "3333", "3", "33", "Brad",
+//                3, 3, 3, 3, 3);
+//        rideTest[1] = new Ride("San Francisco", "San Jose", "3",
+//                "3", "3333", "3", "33", "Brad",
+//                3, 3, 3, 3, 3);
+//        rideTest[2] = new Ride("Santa Monica", "San Jose", "3",
+//                "3", "3333", "3", "33", "Brad",
+//                3, 3, 3, 3, 3);
+//        rideTest[3] = new Ride("Westwood", "San Francisco", "3",
+//                "3", "3333", "3", "33", "Brad",
+//                3, 3, 3, 3, 3);
         RideMatchAdapter adapter = new RideMatchAdapter(rideListings, mMap);
         //RideMatchAdapter adapter = new RideMatchAdapter(rideTest, mMap);
 

@@ -13,6 +13,9 @@ import android.widget.TimePicker;
 
 public class RideListings extends AppCompatActivity {
 
+    public String selectedDep;
+    public String selectedDes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +26,7 @@ public class RideListings extends AppCompatActivity {
         String[] rideListings = {"Los Angeles", "Santa Monica",
                 "Westwood", "San Jose", "Oakland", "San Francisco"};
 
-        MyAdapter adapter = new MyAdapter(rideListings);
+        MyAdapter adapter = new MyAdapter(rideListings, this, false);
 
         rides.setAdapter(adapter);
 
@@ -34,7 +37,7 @@ public class RideListings extends AppCompatActivity {
         String[] rideListings2 = {"Los Angeles", "Santa Monica",
                 "Westwood", "San Jose", "Oakland", "San Francisco"};
 
-        MyAdapter adapter2 = new MyAdapter(rideListings2);
+        MyAdapter adapter2 = new MyAdapter(rideListings2, this, true);
 
         rides2.setAdapter(adapter2);
 
@@ -50,8 +53,8 @@ public class RideListings extends AppCompatActivity {
 
         // TODO: NEED TO FIND THE REAL PLACE SELECTED IN THE LIST
 
-        reservation.edit().putString("departure", "Los Angeles").apply();
-        reservation.edit().putString("destination", "San Jose").apply();
+        reservation.edit().putString("departure", selectedDep).apply();
+        reservation.edit().putString("destination", selectedDes).apply();
 
         if(driver == 1)
         {
